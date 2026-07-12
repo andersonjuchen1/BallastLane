@@ -71,22 +71,19 @@ EF Core. Both were verified as part of the build.
 
 Change `Server=` if your instance differs (e.g. `Server=.\\SQLEXPRESS`).
 
-### 2. JWT signing secret (required)
+### 2. JWT signing secret
 
-The signing key is **not** stored in the repo. Provide it through user-secrets:
+The signing key lives under `Jwt:Key` in `appsettings.json`, so the app runs with no
+extra setup in any environment. The app fails fast at startup if it is missing.
 
-```bash
-dotnet user-secrets set "Jwt:Key" "<a long random secret, 32+ chars>" -p src/TaskManagement.Api
-```
-
-Generate one, for example:
-
-```bash
-# bash
-openssl rand -base64 64
-```
-
-The app fails fast at startup with a clear message if `Jwt:Key` is missing.
+> ⚠️ The committed key is a **development-only** throwaway. For a real deployment, do not
+> ship a signing key in source control — override it with an environment variable instead
+> (which the configuration already honours):
+>
+> ```bash
+> # bash
+> export Jwt__Key="$(openssl rand -base64 64)"
+> ```
 
 ### 3. Database
 

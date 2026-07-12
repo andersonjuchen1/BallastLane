@@ -28,7 +28,7 @@ var jwtSettings = builder.Configuration.GetSection(JwtSettings.SectionName).Get<
 
 if (string.IsNullOrWhiteSpace(jwtSettings.Key))
     throw new InvalidOperationException(
-        "Jwt:Key is not configured. Set it with: dotnet user-secrets set \"Jwt:Key\" \"<secret>\"");
+        "Jwt:Key is not configured. Set it in appsettings.json (or override with the Jwt__Key environment variable).");
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
