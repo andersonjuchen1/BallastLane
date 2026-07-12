@@ -47,9 +47,25 @@ public class AuthService : IAuthService
         return new AuthResponse(token.Token, token.ExpiresAtUtc);
     }
 
-    public Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
+    public async Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken cancellationToken = default)
+    {
+        var user = await _users.GetByUsernameAsync(request.Username, cancellationToken);
 
-    public Task<UserResponse> GetCurrentUserAsync(CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
+        // Same exception for "no such user" and "wrong password" so the caller
+        // cannot distinguish the two.
+        if (user is null || !_passwordHasher.Verify(user.PasswordHash, request.Password))
+            throw new InvalidCredentialsException();
+
+        return IssueToken(user);
+    }
+
+    public async Task<UserResponse> GetCurrentUserAsync(CancellationToken cancellationToken = default)
+    {
+        var user = await _users.GetByIdAsync(_currentUser.UserId, cancellationToken);
+
+        if (user is null)
+            throw NotFoundException.ForEntity(nameof(User), _currentUser.UserId);
+
+        return UserResponse.FromEntity(user);
+    }
 }
