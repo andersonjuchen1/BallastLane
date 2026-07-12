@@ -13,17 +13,20 @@ public class AuthService : IAuthService
     private readonly IPasswordHasher _passwordHasher;
     private readonly IJwtTokenGenerator _tokenGenerator;
     private readonly ICurrentUserService _currentUser;
+    private readonly IUnitOfWork _unitOfWork;
 
     public AuthService(
         IUserRepository users,
         IPasswordHasher passwordHasher,
         IJwtTokenGenerator tokenGenerator,
-        ICurrentUserService currentUser)
+        ICurrentUserService currentUser,
+        IUnitOfWork unitOfWork)
     {
         _users = users;
         _passwordHasher = passwordHasher;
         _tokenGenerator = tokenGenerator;
         _currentUser = currentUser;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request, CancellationToken cancellationToken = default)
@@ -36,7 +39,8 @@ public class AuthService : IAuthService
 
         var passwordHash = _passwordHasher.Hash(request.Password);
         var user = new User(request.Username, request.Email, passwordHash);
-        await _users.AddAsync(user, cancellationToken);
+        _users.Add(user);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return IssueToken(user);
     }

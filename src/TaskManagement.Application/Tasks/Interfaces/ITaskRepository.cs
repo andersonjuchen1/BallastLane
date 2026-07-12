@@ -5,7 +5,8 @@ namespace TaskManagement.Application.Tasks.Interfaces;
 
 /// <summary>
 /// Persistence boundary for tasks. Implemented in Infrastructure with EF Core.
-/// Each method is a self-contained unit of work for this simple API.
+/// Reads are async; writes stage changes only — the caller commits them through
+/// <see cref="IUnitOfWork"/>.
 /// </summary>
 public interface ITaskRepository
 {
@@ -16,9 +17,9 @@ public interface ITaskRepository
         TaskItemStatus? status,
         CancellationToken cancellationToken = default);
 
-    Task AddAsync(TaskItem task, CancellationToken cancellationToken = default);
+    void Add(TaskItem task);
 
-    Task UpdateAsync(TaskItem task, CancellationToken cancellationToken = default);
+    void Update(TaskItem task);
 
-    Task DeleteAsync(TaskItem task, CancellationToken cancellationToken = default);
+    void Remove(TaskItem task);
 }

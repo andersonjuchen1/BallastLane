@@ -11,11 +11,13 @@ public class TaskService : ITaskService
 {
     private readonly ITaskRepository _tasks;
     private readonly ICurrentUserService _currentUser;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public TaskService(ITaskRepository tasks, ICurrentUserService currentUser)
+    public TaskService(ITaskRepository tasks, ICurrentUserService currentUser, IUnitOfWork unitOfWork)
     {
         _tasks = tasks;
         _currentUser = currentUser;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<TaskResponse> CreateAsync(CreateTaskRequest request, CancellationToken cancellationToken = default)
@@ -28,7 +30,8 @@ public class TaskService : ITaskService
             _currentUser.UserId,
             request.Status);
 
-        await _tasks.AddAsync(task, cancellationToken);
+        _tasks.Add(task);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return TaskResponse.FromEntity(task);
     }
@@ -52,7 +55,8 @@ public class TaskService : ITaskService
         var task = await GetOwnedTaskOrThrowAsync(id, cancellationToken);
 
         task.Update(request.Title, request.Description, request.DueDate, request.Status);
-        await _tasks.UpdateAsync(task, cancellationToken);
+        _tasks.Update(task);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return TaskResponse.FromEntity(task);
     }
@@ -61,7 +65,8 @@ public class TaskService : ITaskService
     {
         var task = await GetOwnedTaskOrThrowAsync(id, cancellationToken);
 
-        await _tasks.DeleteAsync(task, cancellationToken);
+        _tasks.Remove(task);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
     /// <summary>

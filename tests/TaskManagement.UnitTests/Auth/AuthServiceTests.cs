@@ -16,9 +16,10 @@ public class AuthServiceTests
     private readonly Mock<IPasswordHasher> _passwordHasher = new();
     private readonly Mock<IJwtTokenGenerator> _tokenGenerator = new();
     private readonly Mock<ICurrentUserService> _currentUser = new();
+    private readonly Mock<IUnitOfWork> _unitOfWork = new();
 
     private AuthService CreateSut() =>
-        new(_users.Object, _passwordHasher.Object, _tokenGenerator.Object, _currentUser.Object);
+        new(_users.Object, _passwordHasher.Object, _tokenGenerator.Object, _currentUser.Object, _unitOfWork.Object);
 
     // --- Register ---
 
@@ -37,11 +38,11 @@ public class AuthServiceTests
         result.AccessToken.Should().Be("jwt-token");
         result.ExpiresAtUtc.Should().Be(expiry);
         _passwordHasher.Verify(h => h.Hash("Passw0rd!"), Times.Once);
-        _users.Verify(r => r.AddAsync(
+        _users.Verify(r => r.Add(
             It.Is<User>(u => u.Username == "alice"
                           && u.Email == "alice@example.com"
-                          && u.PasswordHash == "HASHED"),
-            It.IsAny<CancellationToken>()), Times.Once);
+                          && u.PasswordHash == "HASHED")), Times.Once);
+        _unitOfWork.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -53,7 +54,8 @@ public class AuthServiceTests
         Func<Task> act = () => sut.RegisterAsync(new RegisterRequest("alice", "alice@example.com", "Passw0rd!"));
 
         await act.Should().ThrowAsync<ConflictException>();
-        _users.Verify(r => r.AddAsync(It.IsAny<User>(), It.IsAny<CancellationToken>()), Times.Never);
+        _users.Verify(r => r.Add(It.IsAny<User>()), Times.Never);
+        _unitOfWork.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -66,7 +68,8 @@ public class AuthServiceTests
         Func<Task> act = () => sut.RegisterAsync(new RegisterRequest("alice", "alice@example.com", "Passw0rd!"));
 
         await act.Should().ThrowAsync<ConflictException>();
-        _users.Verify(r => r.AddAsync(It.IsAny<User>(), It.IsAny<CancellationToken>()), Times.Never);
+        _users.Verify(r => r.Add(It.IsAny<User>()), Times.Never);
+        _unitOfWork.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
     // --- Login ---

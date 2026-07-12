@@ -14,12 +14,13 @@ public class TaskServiceTests
 {
     private readonly Mock<ITaskRepository> _repository = new();
     private readonly Mock<ICurrentUserService> _currentUser = new();
+    private readonly Mock<IUnitOfWork> _unitOfWork = new();
     private readonly Guid _userId = Guid.NewGuid();
 
     private TaskService CreateSut()
     {
         _currentUser.SetupGet(x => x.UserId).Returns(_userId);
-        return new TaskService(_repository.Object, _currentUser.Object);
+        return new TaskService(_repository.Object, _currentUser.Object, _unitOfWork.Object);
     }
 
     [Fact]
@@ -36,9 +37,9 @@ public class TaskServiceTests
         result.Status.Should().Be(TaskItemStatus.InProgress);
         result.Id.Should().NotBeEmpty();
 
-        _repository.Verify(r => r.AddAsync(
-            It.Is<TaskItem>(t => t.UserId == _userId && t.Title == "Write report"),
-            It.IsAny<CancellationToken>()), Times.Once);
+        _repository.Verify(r => r.Add(
+            It.Is<TaskItem>(t => t.UserId == _userId && t.Title == "Write report")), Times.Once);
+        _unitOfWork.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -137,7 +138,8 @@ public class TaskServiceTests
         result.Title.Should().Be("Updated title");
         result.Status.Should().Be(TaskItemStatus.Completed);
         task.Title.Should().Be("Updated title");
-        _repository.Verify(r => r.UpdateAsync(task, It.IsAny<CancellationToken>()), Times.Once);
+        _repository.Verify(r => r.Update(task), Times.Once);
+        _unitOfWork.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -152,7 +154,8 @@ public class TaskServiceTests
         Func<Task> act = () => sut.UpdateAsync(task.Id, request);
 
         await act.Should().ThrowAsync<NotFoundException>();
-        _repository.Verify(r => r.UpdateAsync(It.IsAny<TaskItem>(), It.IsAny<CancellationToken>()), Times.Never);
+        _repository.Verify(r => r.Update(It.IsAny<TaskItem>()), Times.Never);
+        _unitOfWork.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -165,7 +168,8 @@ public class TaskServiceTests
 
         await sut.DeleteAsync(task.Id);
 
-        _repository.Verify(r => r.DeleteAsync(task, It.IsAny<CancellationToken>()), Times.Once);
+        _repository.Verify(r => r.Remove(task), Times.Once);
+        _unitOfWork.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -179,6 +183,7 @@ public class TaskServiceTests
         Func<Task> act = () => sut.DeleteAsync(task.Id);
 
         await act.Should().ThrowAsync<NotFoundException>();
-        _repository.Verify(r => r.DeleteAsync(It.IsAny<TaskItem>(), It.IsAny<CancellationToken>()), Times.Never);
+        _repository.Verify(r => r.Remove(It.IsAny<TaskItem>()), Times.Never);
+        _unitOfWork.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 }
