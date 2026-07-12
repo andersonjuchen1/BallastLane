@@ -8,4 +8,38 @@
   <Folder Name="/tests/">
     <Project Path="tests/TaskManagement.UnitTests/TaskManagement.UnitTests.csproj" />
   </Folder>
+  <Folder Name="/client/">
+    <File Path="client/README.md" />
+    <File Path="client/package.json" />
+    <File Path="client/angular.json" />
+    <File Path="client/proxy.conf.json" />
+    <File Path="client/tsconfig.json" />
+    <File Path="client/tsconfig.app.json" />
+    <File Path="client/.postcssrc.json" />
+    <File Path="client/src/index.html" />
+    <File Path="client/src/main.ts" />
+    <File Path="client/src/styles.css" />
+    <File Path="client/src/environments/environment.ts" />
+    <File Path="client/src/environments/environment.development.ts" />
+    <File Path="client/src/app/app.ts" />
+    <File Path="client/src/app/app.html" />
+    <File Path="client/src/app/app.config.ts" />
+    <File Path="client/src/app/app.routes.ts" />
+    <File Path="client/src/app/core/auth/auth.service.ts" />
+    <File Path="client/src/app/core/auth/auth.interceptor.ts" />
+    <File Path="client/src/app/core/auth/auth.guard.ts" />
+    <File Path="client/src/app/shared/models/auth.models.ts" />
+    <File Path="client/src/app/shared/models/task.models.ts" />
+    <File Path="client/src/app/shared/ui/confirm-dialog/confirm-dialog.ts" />
+    <File Path="client/src/app/shared/ui/confirm-dialog/confirm-dialog.html" />
+    <File Path="client/src/app/features/auth/login/login.ts" />
+    <File Path="client/src/app/features/auth/login/login.html" />
+    <File Path="client/src/app/features/auth/register/register.ts" />
+    <File Path="client/src/app/features/auth/register/register.html" />
+    <File Path="client/src/app/features/tasks/task.service.ts" />
+    <File Path="client/src/app/features/tasks/task-list/task-list.ts" />
+    <File Path="client/src/app/features/tasks/task-list/task-list.html" />
+    <File Path="client/src/app/features/tasks/task-form/task-form.ts" />
+    <File Path="client/src/app/features/tasks/task-form/task-form.html" />
+  </Folder>
 </Solution>

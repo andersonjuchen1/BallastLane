@@ -1,0 +1,93 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 px-4 py-8">
+  <div class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
+    <h2 class="text-lg font-semibold text-slate-900">
+      {{ isEditing ? 'Edit task' : 'New task' }}
+    </h2>
+
+    @if (errorMessage()) {
+      <div
+        class="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+        role="alert"
+      >
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="mt-4 space-y-4" novalidate>
+      <div>
+        <label for="title" class="block text-sm font-medium text-slate-700">Title</label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+        />
+        @if (form.controls.title.touched && form.controls.title.invalid) {
+          <p class="mt-1 text-sm text-red-600">A title is required (max 200 characters).</p>
+        }
+      </div>
+
+      <div>
+        <label for="description" class="block text-sm font-medium text-slate-700">Description</label>
+        <textarea
+          id="description"
+          rows="3"
+          formControlName="description"
+          class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+        ></textarea>
+        @if (form.controls.description.touched && form.controls.description.invalid) {
+          <p class="mt-1 text-sm text-red-600">Description is too long (max 2000 characters).</p>
+        }
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label for="dueDate" class="block text-sm font-medium text-slate-700">Due date</label>
+          <input
+            id="dueDate"
+            type="date"
+            formControlName="dueDate"
+            class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          />
+          @if (form.controls.dueDate.touched && form.controls.dueDate.errors?.['required']) {
+            <p class="mt-1 text-sm text-red-600">A due date is required.</p>
+          }
+          @if (form.controls.dueDate.touched && form.controls.dueDate.errors?.['pastDate']) {
+            <p class="mt-1 text-sm text-red-600">Due date cannot be in the past.</p>
+          }
+        </div>
+
+        <div>
+          <label for="status" class="block text-sm font-medium text-slate-700">Status</label>
+          <select
+            id="status"
+            formControlName="status"
+            class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          >
+            @for (status of statuses; track status) {
+              <option [value]="status">{{ statusLabels[status] }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end gap-3">
+        <button
+          type="button"
+          (click)="cancel.emit()"
+          [disabled]="saving()"
+          class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 disabled:opacity-60"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="saving()"
+          class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {{ saving() ? 'Saving…' : isEditing ? 'Save changes' : 'Create task' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

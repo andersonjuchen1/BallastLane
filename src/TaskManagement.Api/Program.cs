@@ -104,7 +104,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionHandler();
 
-app.UseHttpsRedirection();
+// Skip HTTPS redirection in Development: the Angular dev-server proxy forwards
+// to the HTTP endpoint, and a 307 redirect to HTTPS would be blocked by CORS.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
