@@ -39,4 +39,38 @@ public class TaskServiceTests
             It.Is<TaskItem>(t => t.UserId == _userId && t.Title == "Write report"),
             It.IsAny<CancellationToken>()), Times.Once);
     }
+
+    [Fact]
+    public async Task GetAllAsync_returns_current_users_tasks_mapped_to_responses()
+    {
+        var sut = CreateSut();
+        var tasks = new List<TaskItem>
+        {
+            new("A", null, DateTime.UtcNow.AddDays(1), _userId),
+            new("B", null, DateTime.UtcNow.AddDays(2), _userId),
+        };
+        _repository
+            .Setup(r => r.GetByUserAsync(_userId, null, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(tasks);
+
+        var result = await sut.GetAllAsync(null);
+
+        result.Should().HaveCount(2);
+        result.Select(r => r.Title).Should().Equal("A", "B");
+    }
+
+    [Fact]
+    public async Task GetAllAsync_passes_status_filter_to_repository_scoped_to_current_user()
+    {
+        var sut = CreateSut();
+        _repository
+            .Setup(r => r.GetByUserAsync(_userId, TaskItemStatus.Completed, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<TaskItem>());
+
+        await sut.GetAllAsync(TaskItemStatus.Completed);
+
+        _repository.Verify(
+            r => r.GetByUserAsync(_userId, TaskItemStatus.Completed, It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
 }
