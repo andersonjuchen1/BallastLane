@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Global base styles */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}

@@ -1,0 +1,60 @@
+<div class="flex min-h-screen items-center justify-center px-4 py-12">
+  <div class="w-full max-w-md">
+    <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+      <h1 class="text-2xl font-semibold text-slate-900">Sign in</h1>
+      <p class="mt-1 text-sm text-slate-500">Welcome back. Enter your details to continue.</p>
+
+      @if (errorMessage()) {
+        <div
+          class="mt-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+          role="alert"
+        >
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="mt-6 space-y-5" novalidate>
+        <div>
+          <label for="username" class="block text-sm font-medium text-slate-700">Username</label>
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            autocomplete="username"
+            class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          />
+          @if (form.controls.username.touched && form.controls.username.errors?.['required']) {
+            <p class="mt-1 text-sm text-red-600">Username is required.</p>
+          }
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            autocomplete="current-password"
+            class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          />
+          @if (form.controls.password.touched && form.controls.password.errors?.['required']) {
+            <p class="mt-1 text-sm text-red-600">Password is required.</p>
+          }
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="loading()"
+          class="flex w-full items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {{ loading() ? 'Signing in…' : 'Sign in' }}
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-sm text-slate-500">
+        Don't have an account?
+        <a routerLink="/register" class="font-medium text-indigo-600 hover:text-indigo-500">Create one</a>
+      </p>
+    </div>
+  </div>
+</div>
