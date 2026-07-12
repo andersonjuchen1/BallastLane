@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Moq;
+using TaskManagement.Application.Common.Exceptions;
 using TaskManagement.Application.Common.Interfaces;
 using TaskManagement.Application.Tasks.Dtos;
 using TaskManagement.Application.Tasks.Interfaces;
@@ -72,5 +73,112 @@ public class TaskServiceTests
         _repository.Verify(
             r => r.GetByUserAsync(_userId, TaskItemStatus.Completed, It.IsAny<CancellationToken>()),
             Times.Once);
+    }
+
+    // A task the current user owns.
+    private TaskItem OwnedTask() =>
+        new("Owned", "desc", DateTime.UtcNow.AddDays(1), _userId);
+
+    // A task owned by somebody else.
+    private static TaskItem OtherUsersTask() =>
+        new("Theirs", "desc", DateTime.UtcNow.AddDays(1), Guid.NewGuid());
+
+    [Fact]
+    public async Task GetByIdAsync_returns_task_when_owned_by_current_user()
+    {
+        var sut = CreateSut();
+        var task = OwnedTask();
+        _repository.Setup(r => r.GetByIdAsync(task.Id, It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(task);
+
+        var result = await sut.GetByIdAsync(task.Id);
+
+        result.Id.Should().Be(task.Id);
+        result.Title.Should().Be("Owned");
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_throws_NotFound_when_task_is_missing()
+    {
+        var sut = CreateSut();
+        _repository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                   .ReturnsAsync((TaskItem?)null);
+
+        Func<Task> act = () => sut.GetByIdAsync(Guid.NewGuid());
+
+        await act.Should().ThrowAsync<NotFoundException>();
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_throws_NotFound_when_task_belongs_to_another_user()
+    {
+        var sut = CreateSut();
+        var task = OtherUsersTask();
+        _repository.Setup(r => r.GetByIdAsync(task.Id, It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(task);
+
+        Func<Task> act = () => sut.GetByIdAsync(task.Id);
+
+        await act.Should().ThrowAsync<NotFoundException>();
+    }
+
+    [Fact]
+    public async Task UpdateAsync_applies_changes_and_persists_when_owned()
+    {
+        var sut = CreateSut();
+        var task = OwnedTask();
+        _repository.Setup(r => r.GetByIdAsync(task.Id, It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(task);
+        var request = new UpdateTaskRequest(
+            "Updated title", "new desc", DateTime.UtcNow.AddDays(5), TaskItemStatus.Completed);
+
+        var result = await sut.UpdateAsync(task.Id, request);
+
+        result.Title.Should().Be("Updated title");
+        result.Status.Should().Be(TaskItemStatus.Completed);
+        task.Title.Should().Be("Updated title");
+        _repository.Verify(r => r.UpdateAsync(task, It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_throws_NotFound_when_task_belongs_to_another_user()
+    {
+        var sut = CreateSut();
+        var task = OtherUsersTask();
+        _repository.Setup(r => r.GetByIdAsync(task.Id, It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(task);
+        var request = new UpdateTaskRequest("x", null, DateTime.UtcNow.AddDays(1), TaskItemStatus.Pending);
+
+        Func<Task> act = () => sut.UpdateAsync(task.Id, request);
+
+        await act.Should().ThrowAsync<NotFoundException>();
+        _repository.Verify(r => r.UpdateAsync(It.IsAny<TaskItem>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_removes_task_when_owned()
+    {
+        var sut = CreateSut();
+        var task = OwnedTask();
+        _repository.Setup(r => r.GetByIdAsync(task.Id, It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(task);
+
+        await sut.DeleteAsync(task.Id);
+
+        _repository.Verify(r => r.DeleteAsync(task, It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_throws_NotFound_when_task_belongs_to_another_user()
+    {
+        var sut = CreateSut();
+        var task = OtherUsersTask();
+        _repository.Setup(r => r.GetByIdAsync(task.Id, It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(task);
+
+        Func<Task> act = () => sut.DeleteAsync(task.Id);
+
+        await act.Should().ThrowAsync<NotFoundException>();
+        _repository.Verify(r => r.DeleteAsync(It.IsAny<TaskItem>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 }
