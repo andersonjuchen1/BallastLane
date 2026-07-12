@@ -68,4 +68,92 @@ public class AuthServiceTests
         await act.Should().ThrowAsync<ConflictException>();
         _users.Verify(r => r.AddAsync(It.IsAny<User>(), It.IsAny<CancellationToken>()), Times.Never);
     }
+
+    // --- Login ---
+
+    [Fact]
+    public async Task LoginAsync_returns_token_for_valid_credentials()
+    {
+        var sut = CreateSut();
+        var user = new User("alice", "alice@example.com", "HASHED");
+        _users.Setup(r => r.GetByUsernameAsync("alice", It.IsAny<CancellationToken>())).ReturnsAsync(user);
+        _passwordHasher.Setup(h => h.Verify("HASHED", "Passw0rd!")).Returns(true);
+        var expiry = DateTime.UtcNow.AddHours(1);
+        _tokenGenerator.Setup(t => t.Generate(user)).Returns(new TokenResult("jwt-token", expiry));
+
+        var result = await sut.LoginAsync(new LoginRequest("alice", "Passw0rd!"));
+
+        result.AccessToken.Should().Be("jwt-token");
+        result.ExpiresAtUtc.Should().Be(expiry);
+    }
+
+    [Fact]
+    public async Task LoginAsync_throws_InvalidCredentials_when_user_not_found()
+    {
+        var sut = CreateSut();
+        _users.Setup(r => r.GetByUsernameAsync("ghost", It.IsAny<CancellationToken>())).ReturnsAsync((User?)null);
+
+        Func<Task> act = () => sut.LoginAsync(new LoginRequest("ghost", "whatever"));
+
+        await act.Should().ThrowAsync<InvalidCredentialsException>();
+    }
+
+    [Fact]
+    public async Task LoginAsync_throws_InvalidCredentials_when_password_is_wrong()
+    {
+        var sut = CreateSut();
+        var user = new User("alice", "alice@example.com", "HASHED");
+        _users.Setup(r => r.GetByUsernameAsync("alice", It.IsAny<CancellationToken>())).ReturnsAsync(user);
+        _passwordHasher.Setup(h => h.Verify("HASHED", "wrong")).Returns(false);
+
+        Func<Task> act = () => sut.LoginAsync(new LoginRequest("alice", "wrong"));
+
+        await act.Should().ThrowAsync<InvalidCredentialsException>();
+    }
+
+    [Fact]
+    public async Task LoginAsync_reports_the_same_generic_error_for_unknown_user_and_wrong_password()
+    {
+        var sut = CreateSut();
+        _users.Setup(r => r.GetByUsernameAsync("ghost", It.IsAny<CancellationToken>())).ReturnsAsync((User?)null);
+        var user = new User("alice", "alice@example.com", "HASHED");
+        _users.Setup(r => r.GetByUsernameAsync("alice", It.IsAny<CancellationToken>())).ReturnsAsync(user);
+        _passwordHasher.Setup(h => h.Verify("HASHED", "wrong")).Returns(false);
+
+        var unknownUser = await Record.ExceptionAsync(() => sut.LoginAsync(new LoginRequest("ghost", "whatever")));
+        var wrongPassword = await Record.ExceptionAsync(() => sut.LoginAsync(new LoginRequest("alice", "wrong")));
+
+        unknownUser.Should().BeOfType<InvalidCredentialsException>();
+        wrongPassword.Should().BeOfType<InvalidCredentialsException>();
+        wrongPassword!.Message.Should().Be(unknownUser!.Message);
+    }
+
+    // --- Current user (/me) ---
+
+    [Fact]
+    public async Task GetCurrentUserAsync_returns_the_authenticated_user()
+    {
+        var sut = CreateSut();
+        var user = new User("alice", "alice@example.com", "HASHED");
+        _currentUser.SetupGet(x => x.UserId).Returns(user.Id);
+        _users.Setup(r => r.GetByIdAsync(user.Id, It.IsAny<CancellationToken>())).ReturnsAsync(user);
+
+        var result = await sut.GetCurrentUserAsync();
+
+        result.Id.Should().Be(user.Id);
+        result.Username.Should().Be("alice");
+        result.Email.Should().Be("alice@example.com");
+    }
+
+    [Fact]
+    public async Task GetCurrentUserAsync_throws_NotFound_when_user_no_longer_exists()
+    {
+        var sut = CreateSut();
+        _currentUser.SetupGet(x => x.UserId).Returns(Guid.NewGuid());
+        _users.Setup(r => r.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>())).ReturnsAsync((User?)null);
+
+        Func<Task> act = () => sut.GetCurrentUserAsync();
+
+        await act.Should().ThrowAsync<NotFoundException>();
+    }
 }
