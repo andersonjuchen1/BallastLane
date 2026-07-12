@@ -1,0 +1,12 @@
+# Normalize all text files and check them out with CRLF (Windows dev environment).
+* text=auto eol=crlf
+
+# Binary files: never touch line endings.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.dll binary
+*.exe binary
+*.pdf binary
