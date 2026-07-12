@@ -1,6 +1,94 @@
-@TaskManagement.Api_HostAddress = http://localhost:5276
+@host = http://localhost:5276
 
-GET {{TaskManagement.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Register a new account (returns a JWT — auto-login)
+# @name register
+POST {{host}}/api/auth/register
+Content-Type: application/json
 
-###
+{
+  "username": "alice",
+  "email": "alice@example.com",
+  "password": "Passw0rd!"
+}
+
+### Log in (demo account seeded in Development)
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "demo",
+  "password": "Passw0rd!"
+}
+
+### Capture the token from the login response above
+@token = {{login.response.body.accessToken}}
+
+### Current user
+GET {{host}}/api/auth/me
+Authorization: Bearer {{token}}
+
+### List all my tasks
+GET {{host}}/api/tasks
+Authorization: Bearer {{token}}
+
+### List only completed tasks
+GET {{host}}/api/tasks?status=Completed
+Authorization: Bearer {{token}}
+
+### Create a task (201 + Location)
+# @name createTask
+POST {{host}}/api/tasks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Write the quarterly report",
+  "description": "Compile Q3 numbers",
+  "dueDate": "2026-12-31T17:00:00Z",
+  "status": "Pending"
+}
+
+### Capture the new task id
+@taskId = {{createTask.response.body.id}}
+
+### Get one task
+GET {{host}}/api/tasks/{{taskId}}
+Authorization: Bearer {{token}}
+
+### Update a task
+PUT {{host}}/api/tasks/{{taskId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Write the quarterly report",
+  "description": "Compiled — ready for review",
+  "dueDate": "2026-12-31T17:00:00Z",
+  "status": "Completed"
+}
+
+### Delete a task (204)
+DELETE {{host}}/api/tasks/{{taskId}}
+Authorization: Bearer {{token}}
+
+### Validation failure example (empty title + past due date -> 400 field-level)
+POST {{host}}/api/tasks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "x",
+  "dueDate": "2000-01-01T00:00:00Z",
+  "status": "Pending"
+}
+
+### Bad credentials -> 401 (generic message)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "demo",
+  "password": "wrong-password"
+}
