@@ -1,7 +1,9 @@
 using TaskManagement.Application.Auth.Dtos;
 using TaskManagement.Application.Auth.Interfaces;
+using TaskManagement.Application.Common.Exceptions;
 using TaskManagement.Application.Common.Interfaces;
 using TaskManagement.Application.Users.Interfaces;
+using TaskManagement.Domain.Entities;
 
 namespace TaskManagement.Application.Auth.Services;
 
@@ -24,8 +26,26 @@ public class AuthService : IAuthService
         _currentUser = currentUser;
     }
 
-    public Task<AuthResponse> RegisterAsync(RegisterRequest request, CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
+    public async Task<AuthResponse> RegisterAsync(RegisterRequest request, CancellationToken cancellationToken = default)
+    {
+        if (await _users.ExistsByUsernameAsync(request.Username, cancellationToken))
+            throw new ConflictException("Username is already taken.");
+
+        if (await _users.ExistsByEmailAsync(request.Email, cancellationToken))
+            throw new ConflictException("Email is already registered.");
+
+        var passwordHash = _passwordHasher.Hash(request.Password);
+        var user = new User(request.Username, request.Email, passwordHash);
+        await _users.AddAsync(user, cancellationToken);
+
+        return IssueToken(user);
+    }
+
+    private AuthResponse IssueToken(User user)
+    {
+        var token = _tokenGenerator.Generate(user);
+        return new AuthResponse(token.Token, token.ExpiresAtUtc);
+    }
 
     public Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken cancellationToken = default)
         => throw new NotImplementedException();
