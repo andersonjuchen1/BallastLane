@@ -15,6 +15,13 @@ public static class DatabaseSeeder
     public const string DemoEmail = "demo@example.com";
     public const string DemoPassword = "Passw0rd!";
 
+
+    //{
+    //  "username": "andersonjuchen",
+    //  "email": "andersonjuchen@gmail.com",
+    //  "password": "Test123!"
+    //}
+
     public static async Task SeedAsync(
         AppDbContext context,
         IPasswordHasher passwordHasher,
