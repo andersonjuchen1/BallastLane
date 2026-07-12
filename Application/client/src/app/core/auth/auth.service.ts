@@ -7,7 +7,7 @@ import {
   LoginRequest,
   RegisterRequest,
   UserResponse,
-} from '../../shared/models/auth.models';
+} from './auth.models';
 
 const TOKEN_KEY = 'tm.accessToken';
 const EXPIRY_KEY = 'tm.expiresAtUtc';

@@ -1,0 +1,171 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Git\\BallastLane\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{31E82F4B-5663-0C5F-CAC8-22995723C849}|data{31E82F4B-5663-0C5F-CAC8-22995723C849}|C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\data\\task.service.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{31E82F4B-5663-0C5F-CAC8-22995723C849}|data{31E82F4B-5663-0C5F-CAC8-22995723C849}|solutionrelative:client\\src\\app\\features\\tasks\\data\\task.service.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B48AA74-4725-17B4-4684-6BF5089992F9}|task-list{9B48AA74-4725-17B4-4684-6BF5089992F9}|C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-list\\task-list.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{9B48AA74-4725-17B4-4684-6BF5089992F9}|task-list{9B48AA74-4725-17B4-4684-6BF5089992F9}|solutionrelative:client\\src\\app\\features\\tasks\\task-list\\task-list.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B48AA74-4725-17B4-4684-6BF5089992F9}|task-list{9B48AA74-4725-17B4-4684-6BF5089992F9}|C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-list\\task-list.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B48AA74-4725-17B4-4684-6BF5089992F9}|task-list{9B48AA74-4725-17B4-4684-6BF5089992F9}|solutionrelative:client\\src\\app\\features\\tasks\\task-list\\task-list.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3684F04D-06F3-46F6-57A9-20486258C0F8}|task-form{3684F04D-06F3-46F6-57A9-20486258C0F8}|C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-form\\task-form.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3684F04D-06F3-46F6-57A9-20486258C0F8}|task-form{3684F04D-06F3-46F6-57A9-20486258C0F8}|solutionrelative:client\\src\\app\\features\\tasks\\task-form\\task-form.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{31E82F4B-5663-0C5F-CAC8-22995723C849}|data{31E82F4B-5663-0C5F-CAC8-22995723C849}|C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\data\\task.models.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{31E82F4B-5663-0C5F-CAC8-22995723C849}|data{31E82F4B-5663-0C5F-CAC8-22995723C849}|solutionrelative:client\\src\\app\\features\\tasks\\data\\task.models.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3684F04D-06F3-46F6-57A9-20486258C0F8}|task-form{3684F04D-06F3-46F6-57A9-20486258C0F8}|C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-form\\task-form.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{3684F04D-06F3-46F6-57A9-20486258C0F8}|task-form{3684F04D-06F3-46F6-57A9-20486258C0F8}|solutionrelative:client\\src\\app\\features\\tasks\\task-form\\task-form.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7100FFA0-C44B-2047-35D1-38F39C57D005}|src\\TaskManagement.Infrastructure\\TaskManagement.Infrastructure.csproj|c:\\git\\ballastlane\\src\\taskmanagement.infrastructure\\persistence\\seeding\\databaseseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7100FFA0-C44B-2047-35D1-38F39C57D005}|src\\TaskManagement.Infrastructure\\TaskManagement.Infrastructure.csproj|solutionrelative:src\\taskmanagement.infrastructure\\persistence\\seeding\\databaseseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CDE7A2-FFA6-3E3A-1A77-776589C98A7E}|src\\TaskManagement.Api\\TaskManagement.Api.csproj|c:\\git\\ballastlane\\src\\taskmanagement.api\\startup\\databasestartupextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CDE7A2-FFA6-3E3A-1A77-776589C98A7E}|src\\TaskManagement.Api\\TaskManagement.Api.csproj|solutionrelative:src\\taskmanagement.api\\startup\\databasestartupextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CDE7A2-FFA6-3E3A-1A77-776589C98A7E}|src\\TaskManagement.Api\\TaskManagement.Api.csproj|c:\\git\\ballastlane\\src\\taskmanagement.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CDE7A2-FFA6-3E3A-1A77-776589C98A7E}|src\\TaskManagement.Api\\TaskManagement.Api.csproj|solutionrelative:src\\taskmanagement.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "task-list.html",
+              "DocumentMoniker": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-list\\task-list.html",
+              "RelativeDocumentMoniker": "client\\src\\app\\features\\tasks\\task-list\\task-list.html",
+              "ToolTip": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-list\\task-list.html",
+              "RelativeToolTip": "client\\src\\app\\features\\tasks\\task-list\\task-list.html",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAqwHQAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-07-12T21:00:10.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "task-list.ts",
+              "DocumentMoniker": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-list\\task-list.ts",
+              "RelativeDocumentMoniker": "client\\src\\app\\features\\tasks\\task-list\\task-list.ts",
+              "ToolTip": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-list\\task-list.ts",
+              "RelativeToolTip": "client\\src\\app\\features\\tasks\\task-list\\task-list.ts",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAQwEUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-07-12T21:00:10.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "task.service.ts",
+              "DocumentMoniker": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\data\\task.service.ts",
+              "RelativeDocumentMoniker": "client\\src\\app\\features\\tasks\\data\\task.service.ts",
+              "ToolTip": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\data\\task.service.ts",
+              "RelativeToolTip": "client\\src\\app\\features\\tasks\\data\\task.service.ts",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAgwDAAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-07-12T20:58:23.589Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "task.models.ts",
+              "DocumentMoniker": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\data\\task.models.ts",
+              "RelativeDocumentMoniker": "client\\src\\app\\features\\tasks\\data\\task.models.ts",
+              "ToolTip": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\data\\task.models.ts",
+              "RelativeToolTip": "client\\src\\app\\features\\tasks\\data\\task.models.ts",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-07-12T20:58:18.014Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "task-form.ts",
+              "DocumentMoniker": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-form\\task-form.ts",
+              "RelativeDocumentMoniker": "client\\src\\app\\features\\tasks\\task-form\\task-form.ts",
+              "ToolTip": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-form\\task-form.ts",
+              "RelativeToolTip": "client\\src\\app\\features\\tasks\\task-form\\task-form.ts",
+              "ViewState": "AgIAADQAAAAAAAAAAAAQwCgAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2026-07-12T20:53:01.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "task-form.html",
+              "DocumentMoniker": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-form\\task-form.html",
+              "RelativeDocumentMoniker": "client\\src\\app\\features\\tasks\\task-form\\task-form.html",
+              "ToolTip": "C:\\Git\\BallastLane\\client\\src\\app\\features\\tasks\\task-form\\task-form.html",
+              "RelativeToolTip": "client\\src\\app\\features\\tasks\\task-form\\task-form.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFMAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-07-12T20:52:45.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Git\\BallastLane\\src\\TaskManagement.Api\\Program.cs",
+              "RelativeDocumentMoniker": "src\\TaskManagement.Api\\Program.cs",
+              "ToolTip": "C:\\Git\\BallastLane\\src\\TaskManagement.Api\\Program.cs",
+              "RelativeToolTip": "src\\TaskManagement.Api\\Program.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAIAwwGIAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T18:41:19.438Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DatabaseStartupExtensions.cs",
+              "DocumentMoniker": "C:\\Git\\BallastLane\\src\\TaskManagement.Api\\Startup\\DatabaseStartupExtensions.cs",
+              "RelativeDocumentMoniker": "src\\TaskManagement.Api\\Startup\\DatabaseStartupExtensions.cs",
+              "ToolTip": "C:\\Git\\BallastLane\\src\\TaskManagement.Api\\Startup\\DatabaseStartupExtensions.cs",
+              "RelativeToolTip": "src\\TaskManagement.Api\\Startup\\DatabaseStartupExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBYAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T18:41:13.494Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DatabaseSeeder.cs",
+              "DocumentMoniker": "C:\\Git\\BallastLane\\src\\TaskManagement.Infrastructure\\Persistence\\Seeding\\DatabaseSeeder.cs",
+              "RelativeDocumentMoniker": "src\\TaskManagement.Infrastructure\\Persistence\\Seeding\\DatabaseSeeder.cs",
+              "ToolTip": "C:\\Git\\BallastLane\\src\\TaskManagement.Infrastructure\\Persistence\\Seeding\\DatabaseSeeder.cs",
+              "RelativeToolTip": "src\\TaskManagement.Infrastructure\\Persistence\\Seeding\\DatabaseSeeder.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAQwA8AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-12T18:36:50.767Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import {
   CreateTaskRequest,
   TaskResponse,
   TaskStatus,
   UpdateTaskRequest,
-} from '../../shared/models/task.models';
+} from './task.models';
 
 /**
  * Owns the current user's task list as signals. `load` refreshes the list for

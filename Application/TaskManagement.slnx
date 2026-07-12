@@ -16,30 +16,61 @@
     <File Path="client/tsconfig.json" />
     <File Path="client/tsconfig.app.json" />
     <File Path="client/.postcssrc.json" />
+  </Folder>
+  <Folder Name="/client/src/">
     <File Path="client/src/index.html" />
     <File Path="client/src/main.ts" />
     <File Path="client/src/styles.css" />
+  </Folder>
+  <Folder Name="/client/src/environments/">
     <File Path="client/src/environments/environment.ts" />
     <File Path="client/src/environments/environment.development.ts" />
+  </Folder>
+  <Folder Name="/client/src/app/">
     <File Path="client/src/app/app.ts" />
     <File Path="client/src/app/app.html" />
     <File Path="client/src/app/app.config.ts" />
     <File Path="client/src/app/app.routes.ts" />
+  </Folder>
+  <Folder Name="/client/src/app/core/" />
+  <Folder Name="/client/src/app/core/auth/">
     <File Path="client/src/app/core/auth/auth.service.ts" />
-    <File Path="client/src/app/core/auth/auth.interceptor.ts" />
     <File Path="client/src/app/core/auth/auth.guard.ts" />
-    <File Path="client/src/app/shared/models/auth.models.ts" />
-    <File Path="client/src/app/shared/models/task.models.ts" />
-    <File Path="client/src/app/shared/ui/confirm-dialog/confirm-dialog.ts" />
-    <File Path="client/src/app/shared/ui/confirm-dialog/confirm-dialog.html" />
+    <File Path="client/src/app/core/auth/auth.interceptor.ts" />
+    <File Path="client/src/app/core/auth/auth.models.ts" />
+  </Folder>
+  <Folder Name="/client/src/app/layout/" />
+  <Folder Name="/client/src/app/layout/header/">
+    <File Path="client/src/app/layout/header/header.ts" />
+    <File Path="client/src/app/layout/header/header.html" />
+  </Folder>
+  <Folder Name="/client/src/app/features/" />
+  <Folder Name="/client/src/app/features/auth/" />
+  <Folder Name="/client/src/app/features/auth/login/">
     <File Path="client/src/app/features/auth/login/login.ts" />
     <File Path="client/src/app/features/auth/login/login.html" />
+  </Folder>
+  <Folder Name="/client/src/app/features/auth/register/">
     <File Path="client/src/app/features/auth/register/register.ts" />
     <File Path="client/src/app/features/auth/register/register.html" />
-    <File Path="client/src/app/features/tasks/task.service.ts" />
+  </Folder>
+  <Folder Name="/client/src/app/features/tasks/" />
+  <Folder Name="/client/src/app/features/tasks/data/">
+    <File Path="client/src/app/features/tasks/data/task.models.ts" />
+    <File Path="client/src/app/features/tasks/data/task.service.ts" />
+  </Folder>
+  <Folder Name="/client/src/app/features/tasks/task-list/">
     <File Path="client/src/app/features/tasks/task-list/task-list.ts" />
     <File Path="client/src/app/features/tasks/task-list/task-list.html" />
+  </Folder>
+  <Folder Name="/client/src/app/features/tasks/task-form/">
     <File Path="client/src/app/features/tasks/task-form/task-form.ts" />
     <File Path="client/src/app/features/tasks/task-form/task-form.html" />
+  </Folder>
+  <Folder Name="/client/src/app/shared/" />
+  <Folder Name="/client/src/app/shared/ui/" />
+  <Folder Name="/client/src/app/shared/ui/confirm-dialog/">
+    <File Path="client/src/app/shared/ui/confirm-dialog/confirm-dialog.ts" />
+    <File Path="client/src/app/shared/ui/confirm-dialog/confirm-dialog.html" />
   </Folder>
 </Solution>

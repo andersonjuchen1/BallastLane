@@ -11,7 +11,7 @@ import {
   TASK_STATUS_LABELS,
   TaskResponse,
   UpdateTaskRequest,
-} from '../../../shared/models/task.models';
+} from '../data/task.models';
 
 /** Rejects a date before today (local). Allows today and future dates. */
 function notPastDate(control: AbstractControl): ValidationErrors | null {

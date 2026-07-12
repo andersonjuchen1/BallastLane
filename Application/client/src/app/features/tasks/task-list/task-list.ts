@@ -1,8 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../core/auth/auth.service';
+import { Header } from '../../../layout/header/header';
 import { ConfirmDialog } from '../../../shared/ui/confirm-dialog/confirm-dialog';
 import {
   TASK_STATUSES,
@@ -10,21 +9,18 @@ import {
   TaskResponse,
   TaskStatus,
   UpdateTaskRequest,
-} from '../../../shared/models/task.models';
+} from '../data/task.models';
 import { TaskForm } from '../task-form/task-form';
-import { TaskService } from '../task.service';
+import { TaskService } from '../data/task.service';
 
 @Component({
   selector: 'app-task-list',
-  imports: [DatePipe, TaskForm, ConfirmDialog],
+  imports: [DatePipe, Header, TaskForm, ConfirmDialog],
   templateUrl: './task-list.html',
 })
 export class TaskList {
-  private readonly auth = inject(AuthService);
-  private readonly router = inject(Router);
   private readonly taskService = inject(TaskService);
 
-  readonly user = this.auth.currentUser;
   readonly tasks = this.taskService.tasks;
   readonly loading = this.taskService.loading;
   readonly error = this.taskService.error;
@@ -43,7 +39,6 @@ export class TaskList {
   readonly deleteBusy = signal(false);
 
   constructor() {
-    this.auth.loadCurrentUser().subscribe({ error: () => {} });
     this.taskService.load(null);
   }
 
@@ -130,11 +125,6 @@ export class TaskList {
         next: () => this.taskService.load(this.filter()),
         error: () => this.taskService.load(this.filter()),
       });
-  }
-
-  logout(): void {
-    this.auth.logout();
-    this.router.navigateByUrl('/login');
   }
 
   private messageFor(error: HttpErrorResponse): string {
