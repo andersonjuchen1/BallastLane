@@ -32,8 +32,12 @@ public class TaskService : ITaskService
         return TaskResponse.FromEntity(task);
     }
 
-    public Task<IReadOnlyList<TaskResponse>> GetAllAsync(TaskItemStatus? status, CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
+    public async Task<IReadOnlyList<TaskResponse>> GetAllAsync(TaskItemStatus? status, CancellationToken cancellationToken = default)
+    {
+        var tasks = await _tasks.GetByUserAsync(_currentUser.UserId, status, cancellationToken);
+
+        return tasks.Select(TaskResponse.FromEntity).ToList();
+    }
 
     public Task<TaskResponse> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         => throw new NotImplementedException();
