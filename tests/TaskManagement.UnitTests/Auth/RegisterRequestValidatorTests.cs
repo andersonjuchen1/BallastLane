@@ -36,6 +36,30 @@ public class RegisterRequestValidatorTests
     }
 
     [Fact]
+    public void Should_have_error_when_password_has_no_uppercase_letter()
+    {
+        var result = _validator.TestValidate(ValidRequest() with { Password = "passw0rd!" });
+
+        result.ShouldHaveValidationErrorFor(x => x.Password);
+    }
+
+    [Fact]
+    public void Should_have_error_when_password_has_no_lowercase_letter()
+    {
+        var result = _validator.TestValidate(ValidRequest() with { Password = "PASSW0RD!" });
+
+        result.ShouldHaveValidationErrorFor(x => x.Password);
+    }
+
+    [Fact]
+    public void Should_have_error_when_password_has_no_special_character()
+    {
+        var result = _validator.TestValidate(ValidRequest() with { Password = "Password1" });
+
+        result.ShouldHaveValidationErrorFor(x => x.Password);
+    }
+
+    [Fact]
     public void Should_not_have_errors_for_a_valid_request()
     {
         var result = _validator.TestValidate(ValidRequest());
